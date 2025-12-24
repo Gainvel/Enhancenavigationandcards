@@ -9,6 +9,8 @@ import { motion, AnimatePresence } from "motion/react";
 
 import { CamerasView } from "./components/CamerasView";
 
+import { IncidentsView } from "./components/IncidentsView";
+
 function PlaceholderPage({ title }: { title: string }) {
   return (
     <div className="flex items-center justify-center h-[calc(100vh-100px)] text-[#606060]">
@@ -79,9 +81,7 @@ export default function HomePage() {
                 <PlaceholderPage title="System Console" />
               )}
               {activePage === "cameras" && <CamerasView />}
-              {activePage === "incidents" && (
-                <PlaceholderPage title="Incident History" />
-              )}
+              {activePage === "incidents" && <IncidentsView />}
               {activePage === "map" && (
                 <PlaceholderPage title="Facility Map" />
               )}
