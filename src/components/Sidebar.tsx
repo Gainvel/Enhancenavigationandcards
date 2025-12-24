@@ -78,7 +78,7 @@ function Bedtime({ className }: { className?: string }) {
 const MENU_ITEMS = [
   { id: 'home', label: 'Home', iconPath: svgPaths.p32bd3f80, stroke: true },
   { id: 'console', label: 'Console', iconPath: svgPaths.p3b631c80, stroke: true },
-  { id: 'cameras', label: 'Camera Management', iconPath: svgPaths.p1d5c4ec0, stroke: true },
+  { id: 'cameras', label: 'Cameras', iconPath: svgPaths.p1d5c4ec0, stroke: true },
   { id: 'incidents', label: 'Incidents', iconPath: svgPaths.pb3be000, stroke: true },
   { id: 'map', label: 'Map', iconPath: svgPaths.p24f4f00, stroke: true },
   { id: 'status', label: 'Status', iconPath: svgPaths.p17a0c4b0, stroke: false, fill: true },

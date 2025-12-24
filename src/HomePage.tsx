@@ -7,6 +7,8 @@ import { PeakHoursChart } from "./components/PeakHoursCard";
 import { DailyTrafficCard } from "./components/DailyTrafficCard";
 import { motion, AnimatePresence } from "motion/react";
 
+import { CamerasView } from "./components/CamerasView";
+
 function PlaceholderPage({ title }: { title: string }) {
   return (
     <div className="flex items-center justify-center h-[calc(100vh-100px)] text-[#606060]">
@@ -76,9 +78,7 @@ export default function HomePage() {
               {activePage === "console" && (
                 <PlaceholderPage title="System Console" />
               )}
-              {activePage === "cameras" && (
-                <PlaceholderPage title="Camera Management" />
-              )}
+              {activePage === "cameras" && <CamerasView />}
               {activePage === "incidents" && (
                 <PlaceholderPage title="Incident History" />
               )}
