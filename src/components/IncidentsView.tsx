@@ -155,17 +155,17 @@ export function IncidentsView() {
                        <button 
                           onClick={() => handleResolve(incident.id, "occupied")}
                           disabled={resolving === incident.id}
-                          className="h-10 rounded-xl bg-[#FFB4B4] hover:bg-[#ffcccc] text-black border border-[#FFB4B4] text-[10px] font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2 group/btn shadow-[0_0_10px_rgba(255,180,180,0.1)] w-full"
+                          className="h-9 rounded-md bg-[#FFB4B4]/5 hover:bg-[#FFB4B4]/10 text-[#FFB4B4] border border-[#FFB4B4] text-[10px] font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2 group/btn w-full"
                        >
-                          <XCircle size={14} className="group-hover/btn:scale-110 transition-transform" />
+                          <div className="w-1.5 h-1.5 rounded-full bg-[#FFB4B4] shadow-[0_0_4px_#FFB4B4] group-hover/btn:scale-150 transition-transform" />
                           <span className="truncate">Occupied</span>
                        </button>
                        <button 
                           onClick={() => handleResolve(incident.id, "available")}
                           disabled={resolving === incident.id}
-                          className="h-10 rounded-xl bg-[#C7FFBF] hover:bg-[#b0f2a6] text-black border border-[#C7FFBF] text-[10px] font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2 group/btn shadow-[0_0_10px_rgba(199,255,191,0.1)] w-full"
+                          className="h-9 rounded-md bg-[#C7FFBF]/5 hover:bg-[#C7FFBF]/10 text-[#C7FFBF] border border-[#C7FFBF] text-[10px] font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2 group/btn w-full"
                        >
-                          <CheckCircle2 size={14} className="group-hover/btn:scale-110 transition-transform" />
+                          <div className="w-1.5 h-1.5 rounded-full bg-[#C7FFBF] shadow-[0_0_4px_#C7FFBF] group-hover/btn:scale-150 transition-transform" />
                           <span className="truncate">Vacant</span>
                        </button>
                     </div>
