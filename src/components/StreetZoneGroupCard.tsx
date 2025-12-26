@@ -16,6 +16,7 @@ export function StreetZoneGroupCard({ group, isSelected, onSelect }: StreetZoneG
 
   const occupiedCount = group.segments.filter(s => s.status === "Occupied").length;
   const availableCount = group.segments.filter(s => s.status === "Available").length;
+  const allSegmentsOccupied = group.segments.every(s => s.status === "Occupied" || s.status === "Blocked");
 
   // Calculate total width from segments
   const totalWidth = group.segments.reduce((sum, seg) => sum + seg.size, 0) + 
@@ -32,8 +33,12 @@ export function StreetZoneGroupCard({ group, isSelected, onSelect }: StreetZoneG
     <div 
       className={clsx(
         "rounded-xl border transition-all overflow-hidden",
-        isSelected 
+        isSelected && allSegmentsOccupied
+          ? "bg-[#2A2A2A] border-[#FFB4B4]"
+          : isSelected 
           ? "bg-[#2A2A2A] border-[#C7FFBF]"
+          : allSegmentsOccupied
+          ? "bg-[#1E1E1E] border-[#FFB4B4]"
           : "bg-[#1E1E1E] border-[#2A2A2A]"
       )}
     >
