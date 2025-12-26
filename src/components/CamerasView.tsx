@@ -2,6 +2,10 @@ import React from "react";
 import { Camera, CameraCard, Zone } from "./CameraCard";
 import { motion, AnimatePresence } from "motion/react";
 
+interface CamerasViewProps {
+  onCameraSelect: (camera: Camera) => void;
+}
+
 // --- Helper to generate zones ---
 const generateZones = (
   camId: string,
@@ -69,7 +73,7 @@ const MOCK_CAMERAS: Camera[] = [
   },
 ];
 
-export function CamerasView() {
+export function CamerasView({ onCameraSelect }: CamerasViewProps) {
   const filteredCameras = MOCK_CAMERAS;
 
   return (
@@ -86,7 +90,7 @@ export function CamerasView() {
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
-              <CameraCard camera={camera} />
+              <CameraCard camera={camera} onSelect={onCameraSelect} />
             </motion.div>
           ))}
         </AnimatePresence>

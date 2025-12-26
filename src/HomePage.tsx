@@ -8,6 +8,8 @@ import { DailyTrafficCard } from "./components/DailyTrafficCard";
 import { motion, AnimatePresence } from "motion/react";
 
 import { CamerasView } from "./components/CamerasView";
+import { CameraManagementContent } from "./components/CameraManagementContent";
+import { Camera } from "./components/CameraCard";
 
 import { IncidentsView } from "./components/IncidentsView";
 
@@ -29,6 +31,18 @@ function PlaceholderPage({ title }: { title: string }) {
 
 export default function HomePage() {
   const [activePage, setActivePage] = useState("home");
+  const [managingCamera, setManagingCamera] = useState<Camera | null>(null);
+
+  const handleCameraSelect = (camera: Camera) => {
+    setManagingCamera(camera);
+  };
+
+  const handleBackToCameras = () => {
+    setManagingCamera(null);
+  };
+
+  // Determine if we're in management mode
+  const isManagementMode = managingCamera !== null;
 
   return (
     <div
@@ -38,13 +52,16 @@ export default function HomePage() {
       <Sidebar
         activePage={activePage}
         onNavigate={setActivePage}
+        isManagementMode={isManagementMode}
+        managingCamera={managingCamera}
+        onBackToCameras={handleBackToCameras}
       />
 
       {/* Main Content Area */}
       {/* Positioned to the right of sidebar (245px) */}
       <div className="absolute left-[245px] top-0 right-0 bottom-0 overflow-hidden flex flex-col">
         {/* Top Navigation Bar */}
-        <TopNav />
+        <TopNav cameraId={isManagementMode ? managingCamera?.id : undefined} />
 
         {/* Scrollable Content Area */}
         <div className="flex-1 overflow-auto relative">
@@ -80,7 +97,15 @@ export default function HomePage() {
               {activePage === "console" && (
                 <PlaceholderPage title="System Console" />
               )}
-              {activePage === "cameras" && <CamerasView />}
+              
+              {activePage === "cameras" && !isManagementMode && (
+                <CamerasView onCameraSelect={handleCameraSelect} />
+              )}
+              
+              {activePage === "cameras" && isManagementMode && managingCamera && (
+                <CameraManagementContent camera={managingCamera} />
+              )}
+              
               {activePage === "incidents" && <IncidentsView />}
               {activePage === "map" && (
                 <PlaceholderPage title="Facility Map" />

@@ -1,7 +1,9 @@
 import svgPaths from "../../imports/svg-ojo5e3p09l";
 import clsx from "clsx";
 import React from "react";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
+import { Camera } from "./CameraCard";
+import { SidebarManagement } from "./SidebarManagement";
 
 // --- Static Icons ---
 // Adjusted scale/padding to match original design (avoiding "huge" icons)
@@ -77,7 +79,6 @@ function Bedtime({ className }: { className?: string }) {
 
 const MENU_ITEMS = [
   { id: 'home', label: 'Home', iconPath: svgPaths.p32bd3f80, stroke: true },
-  { id: 'console', label: 'Console', iconPath: svgPaths.p3b631c80, stroke: true },
   { id: 'cameras', label: 'Cameras', iconPath: svgPaths.p1d5c4ec0, stroke: true },
   { id: 'incidents', label: 'Incidents', iconPath: svgPaths.pb3be000, stroke: true },
   { id: 'map', label: 'Map', iconPath: svgPaths.p24f4f00, stroke: true },
@@ -94,9 +95,17 @@ const BOTTOM_ITEMS = [
 interface SidebarProps {
   activePage: string;
   onNavigate: (page: string) => void;
+  isManagementMode?: boolean;
+  managingCamera?: Camera | null;
+  onBackToCameras?: () => void;
 }
 
-export function Sidebar({ activePage, onNavigate }: SidebarProps) {
+export function Sidebar({ activePage, onNavigate, isManagementMode, managingCamera, onBackToCameras }: SidebarProps) {
+  // If in management mode, show transformed sidebar
+  if (isManagementMode && managingCamera && onBackToCameras) {
+    return <SidebarManagement camera={managingCamera} onBack={onBackToCameras} />;
+  }
+
   // Find index for the active indicator position (only for main menu)
   const activeIndex = MENU_ITEMS.findIndex(item => item.id === activePage);
 
@@ -195,11 +204,6 @@ export function Sidebar({ activePage, onNavigate }: SidebarProps) {
 
       {/* Bottom Divider */}
       <div className="absolute h-px left-0 top-[800px] w-[245px] bg-[#282828]" />
-      
-      {/* Footer */}
-      <p className="absolute font-['Roboto:Regular',sans-serif] left-[12px] text-[11px] text-white top-[811px]">
-        Gemini 3 Pro
-      </p>
     </div>
   );
 }

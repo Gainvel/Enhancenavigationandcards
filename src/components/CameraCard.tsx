@@ -22,15 +22,27 @@ interface CameraCardProps {
 
 export function CameraCard({ camera, onSelect }: CameraCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isFooterHovered, setIsFooterHovered] = useState(false);
   
   const isOnline = camera.status === "Online";
   const occupiedCount = camera.zones.filter(z => z.status === "Occupied").length;
   const availableCount = camera.zones.filter(z => z.status === "Available").length;
   const totalZones = camera.zones.length;
 
+  const handleCardClick = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const handleFooterClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card toggle
+    if (onSelect) {
+      onSelect(camera);
+    }
+  };
+
   return (
     <motion.div 
-      onClick={() => setIsExpanded(!isExpanded)}
+      onClick={handleCardClick}
       initial={false}
       animate={{ height: isExpanded ? 320 : "auto" }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -138,11 +150,28 @@ export function CameraCard({ camera, onSelect }: CameraCardProps) {
       </div>
 
       {/* Footer - Mini Stats & Toggle */}
-      <div className={clsx(
-        "px-5 py-3 flex justify-between items-center relative z-10 flex-none transition-colors duration-300",
-        isExpanded ? "bg-[#252525] border-t border-[#333]" : "bg-[#252525] border-t border-transparent"
-      )}>
-         <div className="flex items-center gap-2">
+      <div 
+        onClick={handleFooterClick}
+        onMouseEnter={() => setIsFooterHovered(true)}
+        onMouseLeave={() => setIsFooterHovered(false)}
+        className={clsx(
+          "px-5 py-3 flex justify-between items-center relative z-10 flex-none transition-all duration-300 cursor-pointer",
+          isExpanded ? "bg-[#252525] border-t border-[#333]" : "bg-[#252525] border-t border-transparent"
+        )}
+      >
+         {/* Hover indicator - with padding offset */}
+         <motion.div 
+           initial={false}
+           animate={{ 
+             opacity: isFooterHovered ? 1 : 0,
+             scale: isFooterHovered ? 1 : 0.98
+           }}
+           transition={{ duration: 0.2, ease: "easeOut" }}
+           className="absolute left-2 right-2 top-1 bottom-2 rounded-lg bg-[#3A3A3A] pointer-events-none"
+           style={{ zIndex: 0 }}
+         />
+         
+         <div className="flex items-center gap-2 relative z-10">
             <div className="flex -space-x-1.5">
                <div className="h-4 w-4 rounded-full bg-[#333] border border-[#252525]"></div>
                <div className="h-4 w-4 rounded-full bg-[#444] border border-[#252525]"></div>
@@ -150,14 +179,25 @@ export function CameraCard({ camera, onSelect }: CameraCardProps) {
                  +
                </div>
             </div>
-            <span className="text-[10px] text-[#808080] font-medium ml-1">
+            <motion.span 
+              animate={{ color: isFooterHovered ? "#FFFFFF" : "#808080" }}
+              transition={{ duration: 0.2 }}
+              className="text-[10px] font-medium ml-1"
+            >
                 {occupiedCount} Active Detections
-            </span>
+            </motion.span>
          </div>
 
-         <div className="h-6 w-6 rounded-full bg-[#333] flex items-center justify-center text-[#959595] group-hover:bg-[#C7FFBF] group-hover:text-black transition-colors">
+         <motion.div 
+           animate={{ 
+             backgroundColor: isFooterHovered ? "#C7FFBF" : "#333333",
+             color: isFooterHovered ? "#000000" : "#959595"
+           }}
+           transition={{ duration: 0.2 }}
+           className="h-6 w-6 rounded-full flex items-center justify-center relative z-10"
+         >
             {isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-         </div>
+         </motion.div>
       </div>
     </motion.div>
   );
