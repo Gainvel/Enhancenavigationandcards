@@ -11,27 +11,27 @@ interface CameraManagementViewProps {
 
 // Mock data for demonstration
 const MOCK_DESIGNATED_ZONES = [
-  { id: "ZN-A01-001-01-Z01", status: "Occupied" as const },
-  { id: "ZN-A01-001-01-Z02", status: "Available" as const },
-  { id: "ZN-A01-001-01-Z03", status: "Available" as const },
-  { id: "ZN-A01-001-01-Z04", status: "Occupied" as const },
+  { id: "A01-Z01", status: "Occupied" as const },
+  { id: "A01-Z02", status: "Available" as const },
+  { id: "A01-Z03", status: "Available" as const },
+  { id: "A01-Z04", status: "Occupied" as const },
 ];
 
 const MOCK_STREET_ZONES: StreetZoneGroup[] = [
   {
-    id: "AA001",
-    name: "Zone AA001",
+    id: "A01",
+    name: "Zone A01",
     segments: [
       { id: "No Parking", status: "Blocked", position: 0, size: 30 },
-      { id: "Vehicle - C174536", status: "Occupied", vehicleId: "C174536", position: 30, size: 199 },
+      { id: "C01", status: "Occupied", vehicleId: "C01", position: 30, size: 199 },
       { id: "No Parking", status: "Blocked", position: 229, size: 9 },
-      { id: "Vehicle - C175352", status: "Occupied", vehicleId: "C175352", position: 238, size: 229 },
+      { id: "C02", status: "Occupied", vehicleId: "C02", position: 238, size: 229 },
       { id: "No Parking", status: "Blocked", position: 467, size: 31 },
     ]
   },
   {
-    id: "AA002",
-    name: "Zone AA002",
+    id: "A02",
+    name: "Zone A02",
     segments: [
       { id: "No Parking", status: "Blocked", position: 0, size: 45 },
       { id: "Available Space", status: "Available", position: 45, size: 180 },

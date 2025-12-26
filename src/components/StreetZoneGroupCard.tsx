@@ -50,9 +50,19 @@ export function StreetZoneGroupCard({ group, isSelected, onSelect }: StreetZoneG
         <div className="flex items-center gap-2">
           <div className={clsx(
             "w-5 h-5 rounded-md flex items-center justify-center transition-colors",
-            isExpanded ? "bg-[#C7FFBF] text-black" : "bg-[#333] text-[#959595]"
+            isExpanded 
+              ? "bg-[#C7FFBF] text-black" 
+              : allSegmentsOccupied
+                ? "bg-[#FFB4B4]/20 text-[#FFB4B4]"
+                : "bg-[#333] text-[#959595]"
           )}>
-            {isExpanded ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
+            {isExpanded ? (
+              <ChevronDown size={12} />
+            ) : allSegmentsOccupied ? (
+              <ChevronRight size={12} stroke="#FFB4B4" />
+            ) : (
+              <ChevronRight size={12} />
+            )}
           </div>
           <span className={clsx(
             "font-['Chillax:Semibold',sans-serif] text-sm transition-colors",

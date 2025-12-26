@@ -53,33 +53,41 @@ export function CameraManagementSidebar({
           backgroundImage: "linear-gradient(rgb(32, 32, 32) 0%, rgb(32, 32, 32) 76.699%, rgb(31, 31, 31) 84.942%, rgb(32, 32, 32) 85.159%, rgb(32, 32, 32) 100%)" 
         }}
       >
-        {/* Header Section - Unchanged */}
+        {/* Header Section - Integrated Back Button */}
         <div className="flex-none">
-          <div className="h-[66px] px-[23px] flex flex-col justify-center relative">
-            <p className="font-['Chillax:Semibold',sans-serif] text-[19px] text-white">
-              Ontairox LLC
-            </p>
-            <p className="font-['Chillax:Light',sans-serif] text-[12px] text-white mt-0.5">
-              jaadesk@gmail.com
-            </p>
+          <div className="h-[66px] px-[23px] flex items-center relative overflow-hidden">
+            {/* Back Arrow - Slides in */}
+            <motion.div
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.1, duration: 0.4, ease: "easeOut" }}
+              className="absolute left-[15px] z-10"
+            >
+              <button
+                onClick={onBack}
+                className="p-1.5 hover:bg-white/5 rounded-md transition-colors group"
+              >
+                <Undo2 size={16} className="text-[#959595] group-hover:text-[#C7FFBF] transition-colors" />
+              </button>
+            </motion.div>
+            
+            {/* Title Text - Slides right to make room */}
+            <motion.div 
+              initial={{ x: 0 }}
+              animate={{ x: 26 }} 
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="flex flex-col justify-center"
+            >
+              <p className="font-['Chillax:Semibold',sans-serif] text-[19px] text-white">
+                Ontairox LLC
+              </p>
+              <p className="font-['Chillax:Light',sans-serif] text-[12px] text-white mt-0.5">
+                jaadesk@gmail.com
+              </p>
+            </motion.div>
           </div>
           <div className="h-px bg-[#282828] mx-[9px]" />
         </div>
-
-        {/* Back Button */}
-        <motion.div
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.1 }}
-          className="flex-none mt-4 mx-[9px]"
-        >
-          <button
-            onClick={onBack}
-            className="p-1.5 hover:bg-white/5 rounded transition-all group"
-          >
-            <Undo2 size={16} className="text-[#959595] group-hover:text-[#C7FFBF] transition-colors" />
-          </button>
-        </motion.div>
 
         {/* Zone Mode Toggle */}
         <motion.div

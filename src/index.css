@@ -1265,6 +1265,10 @@
     background-color: oklab(84.05% .0829762 .0286856 / .1);
   }
 
+  .bg-\[\#FFB4B4\]\/20 {
+    background-color: oklab(84.05% .0829762 .0286856 / .2);
+  }
+
   .bg-transparent {
     background-color: #0000;
   }

@@ -38,7 +38,8 @@ export function StreetSegmentCard({ segment, totalWidth }: StreetSegmentCardProp
               isAvailable && "text-[#C7FFBF]",
               isBlocked && "text-[#808080]"
             )}>
-              {segment.vehicleId ? `Vehicle - ${segment.vehicleId}` : segment.id}
+              {/* Display vehicleId directly if available, otherwise id. No 'Vehicle - ' prefix. */}
+              {segment.vehicleId ? segment.vehicleId : segment.id}
             </span>
           </div>
           <span className="text-[9px] text-[#808080] font-mono">
