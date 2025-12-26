@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Undo2, ChevronUp, Plus, Save, Trash2, Upload } from "lucide-react";
+import { Undo2, ChevronRight, Plus, Save, Trash2, Upload } from "lucide-react";
 import clsx from "clsx";
 import { Camera } from "./CameraCard";
-import { StreetZoneGroup } from "./CameraManagementView";
+import { ZoneMode, StreetZoneGroup } from "./types";
 import { StreetZoneGroupCard } from "./StreetZoneGroupCard";
 import { DesignatedZoneItem } from "./DesignatedZoneItem";
 import { CameraActionsMenu } from "./CameraActionsMenu";
@@ -84,11 +84,19 @@ interface SidebarManagementProps {
 
 export function SidebarManagement({ camera, onBack }: SidebarManagementProps) {
   const [selectedZone, setSelectedZone] = useState<string | null>(null);
-  const [zoneMode, setZoneMode] = useState<"street" | "designated">("designated");
+  const [zoneMode, setZoneMode] = useState<ZoneMode>("designated");
   const [showActionsMenu, setShowActionsMenu] = useState(false);
+  const [bottomSectionHeight, setBottomSectionHeight] = useState(100);
+  const bottomSectionRef = useRef<HTMLDivElement>(null);
 
   const designatedZones = MOCK_DESIGNATED_ZONES;
   const streetZones = MOCK_STREET_ZONES;
+
+  useEffect(() => {
+    if (bottomSectionRef.current) {
+      setBottomSectionHeight(bottomSectionRef.current.offsetHeight);
+    }
+  }, []);
 
   const handleButtonClick = (buttonId: string) => {
     if (buttonId === 'mode') {
@@ -101,7 +109,7 @@ export function SidebarManagement({ camera, onBack }: SidebarManagementProps) {
     <>
       <motion.div 
         initial={false}
-        className="w-[245px] h-full flex flex-col"
+        className="w-[245px] h-full flex flex-col relative"
         style={{ 
           backgroundImage: "linear-gradient(rgb(32, 32, 32) 0%, rgb(32, 32, 32) 76.699%, rgb(31, 31, 31) 84.942%, rgb(32, 32, 32) 85.159%, rgb(32, 32, 32) 100%)" 
         }}
@@ -192,31 +200,7 @@ export function SidebarManagement({ camera, onBack }: SidebarManagementProps) {
         </div>
 
         {/* Zone & Camera Actions - Bottom Section */}
-        <div className="flex-none">
-          {/* Camera Actions Trigger - Centered above divider */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="flex justify-center mb-1"
-          >
-            <button
-              onClick={() => setShowActionsMenu(!showActionsMenu)}
-              className="flex items-center gap-1 px-3 py-1 hover:bg-white/5 rounded transition-colors group"
-            >
-              <span className="text-[9px] font-medium text-[#707070] group-hover:text-[#959595] transition-colors">
-                Camera Actions
-              </span>
-              <ChevronUp 
-                size={12} 
-                className={clsx(
-                  "text-[#707070] group-hover:text-[#959595] transition-all",
-                  showActionsMenu && "rotate-180"
-                )}
-              />
-            </button>
-          </motion.div>
-
+        <div className="flex-none relative">
           <div className="h-px bg-[#282828] mx-[9px] mb-3" />
           
           <motion.div
@@ -224,6 +208,7 @@ export function SidebarManagement({ camera, onBack }: SidebarManagementProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
             className="px-[9px] pb-4"
+            ref={bottomSectionRef}
           >
             {/* Zone Actions - 2x2 Grid */}
             <div className="grid grid-cols-2 gap-2">
@@ -273,12 +258,16 @@ export function SidebarManagement({ camera, onBack }: SidebarManagementProps) {
         </div>
       </motion.div>
 
-      {/* Camera Actions Menu Panel - Extends to the right */}
-      <AnimatePresence>
-        {showActionsMenu && (
-          <CameraActionsMenu onModeToggle={() => setZoneMode(prev => prev === 'designated' ? 'street' : 'designated')} />
-        )}
-      </AnimatePresence>
+      {/* Camera Actions Menu - Always render to show notch */}
+      <CameraActionsMenu 
+        camera={camera} 
+        onClose={() => setShowActionsMenu(false)}
+        height={bottomSectionHeight} 
+        isExpanded={showActionsMenu}
+        onToggle={() => setShowActionsMenu(!showActionsMenu)}
+        zoneMode={zoneMode}
+        onZoneModeChange={setZoneMode}
+      />
     </>
   );
 }

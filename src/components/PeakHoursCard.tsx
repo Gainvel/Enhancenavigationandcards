@@ -25,9 +25,10 @@ export function PeakHoursChart() {
                 </div>
             </div>
 
-          <div className="flex-1 w-full min-h-[200px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={data} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
+          <div className="flex-1 w-full min-h-[200px] relative">
+            <div className="absolute inset-0">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={data} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#C7FFBF" stopOpacity={0.3}/>
@@ -66,6 +67,7 @@ export function PeakHoursChart() {
                 />
               </AreaChart>
             </ResponsiveContainer>
+            </div>
           </div>
           
           <div className="mt-4 pt-4 border-t border-[#303030] flex justify-between items-center">

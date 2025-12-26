@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import clsx from "clsx";
-import { StreetZoneGroup } from "./CameraManagementView";
+import { StreetZoneGroup } from "./types";
 import { StreetSegmentCard } from "./StreetSegmentCard";
 
 interface StreetZoneGroupCardProps {

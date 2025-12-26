@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "motion/react";
 import clsx from "clsx";
 import { Ban } from "lucide-react";
-import { StreetSegment } from "./CameraManagementView";
+import { StreetSegment } from "./types";
 
 interface StreetSegmentCardProps {
   segment: StreetSegment;

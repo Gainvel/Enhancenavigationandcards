@@ -24,9 +24,10 @@ export function DailyTrafficCard() {
             </div>
         </div>
 
-        <div className="flex-1 w-full min-h-[200px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={data} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
+        <div className="flex-1 w-full min-h-[200px] relative">
+          <div className="absolute inset-0">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={data} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
                <CartesianGrid vertical={false} stroke="#333" strokeDasharray="3 3" />
               <XAxis 
                 dataKey="day" 
@@ -57,6 +58,7 @@ export function DailyTrafficCard() {
               />
             </BarChart>
           </ResponsiveContainer>
+          </div>
         </div>
         
         <div className="mt-4 flex items-center justify-between text-xs text-[#959595] pt-4 border-t border-[#303030]">

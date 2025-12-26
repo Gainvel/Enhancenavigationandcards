@@ -2,27 +2,12 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Camera } from "./CameraCard";
 import { CameraManagementSidebar } from "./CameraManagementSidebar";
+import { ZoneMode, StreetZoneGroup } from "./types";
 
 interface CameraManagementViewProps {
   camera: Camera;
   onBack: () => void;
 }
-
-export interface StreetZoneGroup {
-  id: string;
-  name: string;
-  segments: StreetSegment[];
-}
-
-export interface StreetSegment {
-  id: string;
-  status: "Occupied" | "Available" | "Blocked";
-  vehicleId?: string;
-  position: number; // percentage 0-100
-  size: number; // pixel width
-}
-
-export type ZoneMode = "street" | "designated";
 
 // Mock data for demonstration
 const MOCK_DESIGNATED_ZONES = [
@@ -60,7 +45,7 @@ export function CameraManagementView({ camera, onBack }: CameraManagementViewPro
   const [selectedZone, setSelectedZone] = useState<string | null>(null);
 
   return (
-    <div className="relative w-full h-full flex">
+    <div className="relative w-full h-full flex overflow-hidden">
       {/* Transformed Sidebar */}
       <CameraManagementSidebar 
         camera={camera}
